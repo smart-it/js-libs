@@ -39,7 +39,7 @@
               //Trigger thumbnail showed event
               var newThumbnail = (contentId)?$(data.thumbnails[contentId]):null;
               var oldThumbnail = (oldContentId)?$(data.thumbnails[oldContentId]):null;;
-              $(data.currentMainContent).trigger('contentShowed', [clonedContent, newThumbnail, oldThumbnail])
+              $(data.currentMainContent).trigger('contentShowed', [clonedContent, newThumbnail, oldContentId, oldThumbnail])
             };
             $(this).data('smartContentSlider', {
               contents: contents
