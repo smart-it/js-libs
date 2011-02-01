@@ -85,6 +85,16 @@
         });
       }
       ,
+      select: function(contentId) {
+        return this.each(function() {
+          var data = $(this).data('smartContentSlider');
+          if(!data) {
+            $(this).smartContentSlider()
+          }
+          data.showContentForId(contentId);
+        });
+      }
+      ,
       next: function() {
         return this.each(function() {
           var data = $(this).data('smartContentSlider');
