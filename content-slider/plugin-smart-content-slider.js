@@ -13,7 +13,7 @@
             var currentMainContent = this;
             var configOptions = options;
             var showfx;
-            if(options == null || options.showfx == undefined || options.showfx == null) {
+            if(options == null || typeof(options.showfx) == 'undefined' || options.showfx == null) {
               showfx = function(content){
                 $(content).hide();
                 $(content).show();
@@ -125,7 +125,7 @@
               e.stopPropagation();
             }
           });
-          if(continuing == undefined || continuing == null) {
+          if(typeof(continuing) == 'undefined' || continuing == null) {
             continuing = true;
           }
           var stop = self._unrotate || ( self._unrotate = !continuing
