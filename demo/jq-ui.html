@@ -66,20 +66,20 @@
         });
         $("#slideShowContainer2").smartContentSlider();
         $("#slideShowContainer2").smartContentSlider('autoSlide', 2250, false);
-        $("#next2").click(function(){
-          $("#slideShowContainer2").smartContentSlider('next');
+        $("#next1").click(function(){
+          $("#slideShowContainer1").smartContentSlider('next');
           return false;
         });
-        $("#previous2").click(function(){
-          $("#slideShowContainer2").smartContentSlider('previous');
+        $("#previous1").click(function(){
+          $("#slideShowContainer1").smartContentSlider('previous');
           return false;
         });
-        $("#start1").click(function(){
-          $("#slideShowContainer1").smartContentSlider('autoSlide', 10000);
+        $("#start2").click(function(){
+          $("#slideShowContainer2").smartContentSlider('autoSlide', 10000);
           return false;
         });
-        $("#stop1").click(function(){
-          $("#slideShowContainer1").smartContentSlider('autoSlide', 0);
+        $("#stop2").click(function(){
+          $("#slideShowContainer2").smartContentSlider('autoSlide', 0);
           return false;
         });
       });
@@ -222,8 +222,9 @@
         <div class="thumbnail"><a href="#content-4" class="contentHref"></a><div class="thumbnailContent">Mahdi</div></div>
       </div>
     </div>
-    <a href="#" id="start1">Start Slide Show</a>
-    <a href="#" id="stop1">Stop Slide Show</a>
+    <a href="#" id="previous1">Previous</a>
+    <a href="#" id="next1">Next</a>
+    
     <div id="slideShowContainer2" class="slideShowContainer">
       <div class="mainContents" id="#mainContents2">
         <div id="content-5" class="content"><img src="./images/image1.jpg" alt="Amitabh Banchan" /><br /><div class="captionBg"></div><label>AB</label></div>
@@ -238,7 +239,7 @@
         <div class="thumbnail"><a href="#content-8" class="contentHref"></a><div class="thumbnailContent">Mahdi</div></div>
       </div>
     </div>
-    <a href="#" id="previous2">Previous</a>
-    <a href="#" id="next2">Next</a>
+    <a href="#" id="start2">Start Slide Show</a>
+    <a href="#" id="stop2">Stop Slide Show</a>
   </body>
 </html>

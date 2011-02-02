@@ -8,7 +8,6 @@
           var actHeight = $(this).innerHeight();
           var actWidth = $(this).innerWidth();
           var mainDiv = this;
-          alert($("img", $(mainDiv)).attr('src'))
           var showCropOnly = function(c) {
             if(data.timeout != null) {
               clearTimeout(data.timeout)
@@ -176,26 +175,3 @@
   };
   return true;
 })(jQuery);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
