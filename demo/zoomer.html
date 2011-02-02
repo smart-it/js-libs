@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0052)http://localhost:10080/RangsWeb/jsp/jq-ui.jsp#tabs-3 -->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>jq-ui</title>
+    <link rel="stylesheet" type="text/css" href="./css/jquery-ui-base-1.8.css">
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-ui.min-1.8.js"></script>
+    <script type="text/javascript" src="../zoomer/plugin-smart-zoomer.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $(".croppableImage").smartZoomer();
+      });
+    </script>
+    <style type="text/css">
+      .container {
+        margin: 0 auto;
+        width: 320px;
+        z-index: 1;
+      }
+      .croppableImage {
+        width: 300px;
+        height: 200px;
+        position: relative;
+        z-index: 1;
+      }
+      .croppableImage > img {
+        width: 300px;
+        height: 200px;
+        z-index: 1;
+      }
+      span {
+        z-index: 100;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="croppableImage">
+        <img src="./images/image1.jpg" alt="Amitabh Banchan" ondragstart="return false" onselectstart="return false" />
+      </div>
+      <span>&nbsp;</span>
+      <span>&nbsp;</span>
+    </div>
+  </body>
+</html>
