@@ -5,12 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>jq-ui</title>
     <link rel="stylesheet" type="text/css" href="./css/jquery-ui-base-1.8.css">
-    <link rel="stylesheet" type="text/css" href="./css/jquery.Jcrop.css">
-    <script type="text/javascript" src="./js/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
     <script type="text/javascript" src="./js/jquery-ui.min-1.8.js"></script>
-    <script type="text/javascript" src="./js/jquery.Jcrop.js"></script>
+    <script type="text/javascript" src="../zoomer/plugin-smart-zoomer.js"></script>
     <script type="text/javascript" src="../content-slider/plugin-smart-content-slider.js"></script>
-        <script type="text/javascript">
+    <script type="text/javascript">
       var rotationDuration = 2000;
       $(function() {
         var tab = $( "#tabs" ).tabs({
@@ -50,10 +49,14 @@
     <script type="text/javascript">
       $(document).ready(function(){
         $("#slideShowContainer1").bind('contentShowed', function(event, contentId, thumbnail, oldContentId, oldThumbnail){
-          $(thumbnail).addClass('redColor')
-          if(oldThumbnail != null && contentId != oldContentId) {
-            $(oldThumbnail).removeClass('redColor')
+          if(oldThumbnail == thumbnail) {
+            return true;
           }
+          if(oldThumbnail != null) {
+            $(oldThumbnail).removeClass('redColor');
+          }
+          $(thumbnail).addClass('redColor');
+          $(".croppableImage", contentId).smartZoomer({});
           return true;
         });
         $("#slideShowContainer1").smartContentSlider({
@@ -61,7 +64,6 @@
             $(content).fadeIn(2000);
           }
         });
-        $("#slideShowContainer1").smartContentSlider('autoSlide', 4000);
         $("#slideShowContainer2").smartContentSlider();
         $("#slideShowContainer2").smartContentSlider('autoSlide', 2250, false);
         $("#next2").click(function(){
@@ -73,13 +75,18 @@
           return false;
         });
         $("#start1").click(function(){
-          $("#slideShowContainer1").smartContentSlider('autoSlide', 1750);
+          $("#slideShowContainer1").smartContentSlider('autoSlide', 10000);
           return false;
         });
         $("#stop1").click(function(){
           $("#slideShowContainer1").smartContentSlider('autoSlide', 0);
           return false;
         });
+      });
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        
       });
     </script>
     <style type="text/css">
@@ -116,6 +123,7 @@
       }
       .mainContents {
         height: 200px;
+        overflow: hidden;
       }
       #allHeads {
         clear: both;
@@ -124,7 +132,7 @@
         color: red;
       }
       .slideShowContainer .content {
-        width: 400px;
+        width: 300px;
         text-align: left;
         position: relative;
       }
@@ -133,7 +141,7 @@
       }
       .slideShowContainer .content img {
         height: 200px;
-        width: 400px;
+        width: 300px;
       }
       .slideShowContainer .content label {
         z-index: 100;
@@ -148,7 +156,7 @@
         position: absolute;
         top: 160px;
         height: 40px;
-        width: 400px;
+        width: 300px;
         background-color: gray;
         /* for IE */
         filter:alpha(opacity=60);
@@ -202,10 +210,10 @@
     </div>
     <div id="slideShowContainer1" class="slideShowContainer">
       <div class="mainContents" id="#mainContents1">
-        <div id="content-1" class="content"><img src="./images/image1.jpg" alt="Amitabh Banchan" /><br /><div class="captionBg"></div><label>AB</label></div>
-        <div id="content-2" class="content"><img src="./images/image2.jpg" alt="Flame" /><br /><div class="captionBg"></div><label>Flame</label></div>
-        <div id="content-3" class="content"><img src="./images/image3.png" alt="Screenshot" /><br /><div class="captionBg"></div><label>Screenshot of BCB</label></div>
-        <div id="content-4" class="content"><img src="./images/image4.JPG" alt="Mahdi" /><br /><div class="captionBg"></div><label>Mahdi</label></div>
+        <div id="content-1" class="content"><div class="croppableImage" id="croppableImage-1"><img src="./images/image1.jpg" alt="Amitabh Banchan" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>AB</label></div>
+        <div id="content-2" class="content"><div class="croppableImage" id="croppableImage-2"><img src="./images/image2.jpg" alt="Flame" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Flame</label></div>
+        <div id="content-3" class="content"><div class="croppableImage" id="croppableImage-3"><img src="./images/image3.png" alt="Screenshot" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Screenshot of BCB</label></div>
+        <div id="content-4" class="content"><div class="croppableImage" id="croppableImage-4"><img src="./images/image4.JPG" alt="Mahdi" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Mahdi</label></div>
       </div>
       <div class="thumbnails">
         <div class="thumbnail"><a href="#content-1" class="contentHref"></a><div class="thumbnailContent">AB</div></div>
