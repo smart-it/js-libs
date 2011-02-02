@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- saved from url=(0052)http://localhost:10080/RangsWeb/jsp/jq-ui.jsp#tabs-3 -->
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>jq-ui</title>
+    <link rel="stylesheet" type="text/css" href="./js/jquery-ui-base-1.8.css">
+    <script type="text/javascript" src="./js/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="./js/jquery-ui.min-1.8.js"></script>
+    <script type="text/javascript" src="../content-slider/plugin-smart-content-slider.js"></script>
+        <script type="text/javascript">
+      var rotationDuration = 2000;
+      $(function() {
+        var tab = $( "#tabs" ).tabs({
+          select: function( event, ui ) {
+            $( "#slider" ).slider( "value", ui.index );
+            $(".outerTabContent").each(function(){
+              $(this).hide();
+            });
+            $("#o"+$(ui.panel).attr('id')).show('slide', {}, 1500);
+            $("#h"+$(ui.panel).attr('id')).show('blind', {}, 1500);
+            return true;
+          }
+          , show: function(event, ui) {
+            return true;
+          }
+          //, fx: { opacity: 'toggle', speed: 'fast' }
+
+        });
+        $(tab).tabs("rotate", rotationDuration, false)
+        $(".container").each(function(){
+          $(this).hover(function(){
+            $(tab).tabs("rotate", 0, false)
+          }, function(){
+            $(tab).tabs("rotate", rotationDuration, false)
+          });
+        });
+        $( "#slider" ).slider({
+          min: 0,
+          max: $(tab).tabs( "length" ) - 1,
+          slide: function( event, ui ) {
+            $(tab).tabs( "select", ui.value );
+            return true;
+          }
+        });
+      });
+    </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#slideShowContainer1").bind('contentShowed', function(event, contentId, thumbnail, oldContentId, oldThumbnail){
+          $(thumbnail).addClass('redColor')
+          if(oldThumbnail != null && contentId != oldContentId) {
+            $(oldThumbnail).removeClass('redColor')
+          }
+          return true;
+        });
+        $("#slideShowContainer1").smartContentSlider({
+          showfx: function(content) {
+            $(content).fadeIn(2000);
+          }
+        });
+        $("#slideShowContainer1").smartContentSlider('autoSlide', 4000);
+        $("#slideShowContainer2").smartContentSlider();
+        $("#slideShowContainer2").smartContentSlider('autoSlide', 2250, false);
+        $("#next2").click(function(){
+          $("#slideShowContainer2").smartContentSlider('next');
+          return false;
+        });
+        $("#previous2").click(function(){
+          $("#slideShowContainer2").smartContentSlider('previous');
+          return false;
+        });
+        $("#start1").click(function(){
+          $("#slideShowContainer1").smartContentSlider('autoSlide', 1750);
+          return false;
+        });
+        $("#stop1").click(function(){
+          $("#slideShowContainer1").smartContentSlider('autoSlide', 0);
+          return false;
+        });
+      });
+    </script>
+    <style type="text/css">
+      .container{
+        border: 1px solid black;
+        height: 300px;
+      }
+      #controls {
+        width: 550px;
+        float: right;
+      }
+      #tabs {
+        border: none;
+      }
+      .ui-tabs-nav {
+        float: right;
+      }
+      #slider {
+        width: 470px;
+        float: right;
+        margin-right: 20px;
+      }
+      #slider, #tabs {
+        clear: both;
+      }
+      .tabHeader {
+        width: 160px;
+      }
+      .outerTabContent {
+        display: none;
+      }
+      .headers {
+        float: left;
+      }
+      .mainContents {
+        height: 200px;
+      }
+      #allHeads {
+        clear: both;
+      }
+      .redColor {
+        color: red;
+      }
+      .slideShowContainer .content {
+        width: 400px;
+        text-align: left;
+        position: relative;
+      }
+      .slideShowContainer .content div {
+        z-index: 10;
+      }
+      .slideShowContainer .content img {
+        height: 200px;
+        width: 400px;
+      }
+      .slideShowContainer .content label {
+        z-index: 100;
+        font-family: serif;
+        font-weight: 900;
+        position: absolute;
+        top: 180px;
+        left: 5px;
+        color: white;
+      }
+      .slideShowContainer .content .captionBg {
+        position: absolute;
+        top: 160px;
+        height: 40px;
+        width: 400px;
+        background-color: gray;
+        /* for IE */
+        filter:alpha(opacity=60);
+        /* CSS3 standard */
+        opacity:0.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="allHeads">
+        <div class="actualHeads">
+          <div id="htabs-1" class="outerTabContent headers">
+            <h1>Header 1</h1>
+          </div>
+          <div id="htabs-2" class="outerTabContent headers">
+            <h1>Header 2</h1>
+          </div>
+          <div id="htabs-3" class="outerTabContent headers">
+            <h1>Header 3</h1>
+          </div>
+        </div>
+        <div id="controls">
+          <div id="slider"><a href="#" style="left: 50%; "></a></div>
+          <div id="tabs">
+            <ul>
+              <li class="tabContent tabHeader"><a href="#tabs-1" class="hrefs">Nunc tincidunt</a></li>
+              <li class="tabContent tabHeader"><a href="#tabs-2" class="hrefs">Proin dolor</a></li>
+              <li class="tabContent tabHeader"><a href="#tabs-3" class="hrefs">Aenean lacinia</a></li>
+            </ul>
+            <div id="tabs-1" class="tabContent">
+            </div>
+            <div id="tabs-2" class="tabContent">
+            </div>
+            <div id="tabs-3" class="tabContent">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="clear: both;"></div>
+      <div id="otabs-1" class="outerTabContent">
+        <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+      </div>
+      <div id="otabs-2" class="outerTabContent">
+        <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+      </div>
+      <div id="otabs-3" class="outerTabContent">
+        <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Fusce sodales. Quisque eu urna vel enim commodo pellentesque. Praesent eu risus hendrerit ligula tempus pretium. Curabitur lorem enim, pretium nec, feugiat nec, luctus a, lacus.</p>
+        <p>Duis cursus. Maecenas ligula eros, blandit nec, pharetra at, semper at, magna. Nullam ac lacus. Nulla facilisi. Praesent viverra justo vitae neque. Praesent blandit adipiscing velit. Suspendisse potenti. Donec mattis, pede vel pharetra blandit, magna ligula faucibus eros, id euismod lacus dolor eget odio. Nam scelerisque. Donec non libero sed nulla mattis commodo. Ut sagittis. Donec nisi lectus, feugiat porttitor, tempor ac, tempor vitae, pede. Aenean vehicula velit eu tellus interdum rutrum. Maecenas commodo. Pellentesque nec elit. Fusce in lacus. Vivamus a libero vitae lectus hendrerit hendrerit.</p>
+      </div>
+    </div>
+    <div id="slideShowContainer1" class="slideShowContainer">
+      <div class="mainContents" id="#mainContents1">
+        <div id="content-1" class="content"><img src="./images/image1.jpg" alt="Amitabh Banchan" /><br /><div class="captionBg"></div><label>AB</label></div>
+        <div id="content-2" class="content"><img src="./images/image2.jpg" alt="Flame" /><br /><div class="captionBg"></div><label>Flame</label></div>
+        <div id="content-3" class="content"><img src="./images/image3.png" alt="Screenshot" /><br /><div class="captionBg"></div><label>Screenshot of BCB</label></div>
+        <div id="content-4" class="content"><img src="./images/image4.JPG" alt="Mahdi" /><br /><div class="captionBg"></div><label>Mahdi</label></div>
+      </div>
+      <div class="thumbnails">
+        <div class="thumbnail"><a href="#content-1" class="contentHref"></a><div class="thumbnailContent">AB</div></div>
+        <div class="thumbnail"><a href="#content-2" class="contentHref"></a><div class="thumbnailContent">Flame</div></div>
+        <div class="thumbnail"><a href="#content-3" class="contentHref"></a><div class="thumbnailContent">BCB</div></div>
+        <div class="thumbnail"><a href="#content-4" class="contentHref"></a><div class="thumbnailContent">Mahdi</div></div>
+      </div>
+    </div>
+    <a href="#" id="start1">Start Slide Show</a>
+    <a href="#" id="stop1">Stop Slide Show</a>
+    <div id="slideShowContainer2" class="slideShowContainer">
+      <div class="mainContents" id="#mainContents2">
+        <div id="content-5" class="content"><img src="./images/image1.jpg" alt="Amitabh Banchan" /><br /><div class="captionBg"></div><label>AB</label></div>
+        <div id="content-6" class="content"><img src="./images/image2.jpg" alt="Flame" /><br /><div class="captionBg"></div><label>Flame</label></div>
+        <div id="content-7" class="content"><img src="./images/image3.png" alt="Screenshot" /><br /><div class="captionBg"></div><label>Screenshot of BCB</label></div>
+        <div id="content-8" class="content"><img src="./images/image4.JPG" alt="Mahdi" /><br /><div class="captionBg"></div><label>Mahdi</label></div>
+      </div>
+      <div class="thumbnails">
+        <div class="thumbnail"><a href="#content-5" class="contentHref"></a><div class="thumbnailContent">AB</div></div>
+        <div class="thumbnail"><a href="#content-6" class="contentHref"></a><div class="thumbnailContent">Flame</div></div>
+        <div class="thumbnail"><a href="#content-7" class="contentHref"></a><div class="thumbnailContent">BCB</div></div>
+        <div class="thumbnail"><a href="#content-8" class="contentHref"></a><div class="thumbnailContent">Mahdi</div></div>
+      </div>
+    </div>
+    <a href="#" id="previous2">Previous</a>
+    <a href="#" id="next2">Next</a>
+  </body>
+</html>
