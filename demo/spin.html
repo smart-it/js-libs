@@ -1,0 +1,164 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>jq-ui</title>
+    <link rel="stylesheet" type="text/css" href="./css/jquery-ui-base-1.8.css">
+    <link rel="stylesheet" type="text/css" href="../zoomer/smart-zoomer.css">
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-ui.min-1.8.js"></script>
+    <script type="text/javascript" src="../zoomer/plugin-smart-zoomer.js"></script>
+    <script type="text/javascript" src="../content-slider/plugin-smart-content-slider.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $("#spinContainer").bind('contentShowed', function(event, contentId, thumbnail, oldContentId, oldThumbnail){
+          if(contentId == oldContentId) {
+            return true;
+          }
+          $(".croppableImage", contentId).smartZoomer({});
+          return true;
+        });
+        $("#spinContainer").hover(function(){
+          $("#spinContainer").smartContentSlider('autoSlide', 0);
+        }, function(){
+          $("#spinContainer").smartContentSlider('autoSlide', 1000);
+        });
+        $("#spinContainer").smartContentSlider({
+          showfx: function(content) {
+            $(content).show();
+          }
+        });
+        $("#spinContainer").smartContentSlider('autoSlide', 1000);
+      });
+    </script>
+    <style type="text/css">
+      .container {
+        margin: 0 auto;
+        width: 660px;
+        z-index: 1;
+      }
+      .croppableImage {
+        width: 600px;
+        height: 400px;
+        position: relative;
+        z-index: 1;
+      }
+      .croppableImage > img {
+        width: 600px;
+        height: 400px;
+        z-index: 1;
+      }
+      span {
+        z-index: 100;
+      }
+      .thumnails {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="spinContainer" class="slideShowContainer">
+        <div class="mainContents" id="#mainContent">
+          <div id="content-1" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu01.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-2" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu02.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-3" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu03.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-4" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu04.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-5" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu05.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-6" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu06.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-7" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu07.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-8" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu08.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-9" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu09.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-10" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu10.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-11" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu11.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-12" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu12.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-13" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu13.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-14" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu14.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-15" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu15.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+          <div id="content-16" class="content">
+            <div class="croppableImage">
+              <img src="./spin/modhu16.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
+            </div>
+          </div>
+        </div>
+        <div class="thumbnails">
+          <div class="thumbnail"><a href="#content-1" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-2" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-3" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-4" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-5" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-6" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-7" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-8" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-9" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-10" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-11" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-12" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-13" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-14" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-15" class="contentHref"></a></div>
+          <div class="thumbnail"><a href="#content-16" class="contentHref"></a></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
