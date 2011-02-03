@@ -10,10 +10,14 @@
     <script type="text/javascript" src="../content-slider/plugin-smart-content-slider.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-        var coord = {x: 0, y: 0, currentRatio: 0}
+        var coord = {x: 0, y: 0, currentRatio: 0, draggingDisabled: null}
         $("#spinContainer").bind('contentShowed', function(event, contentId, thumbnail, oldContentId, oldThumbnail){
           if(contentId == oldContentId) {
             return true;
+          }
+          if($("#mouseControl").text() == 'Drag') {
+            $(".croppableImage").click(scrollFn);
+            $(".croppableImage").mousemove(cursorFn);
           }
           return true;
         });
@@ -30,11 +34,51 @@
               coord.currentRatio = currentRatio;
               return true;
             });
-            $(".croppableImage", content).smartZoomer({x: coord.x, y: coord.y, currentRatio: coord.currentRatio});
+            $(".croppableImage", content).smartZoomer(coord);
             $(content).show();
           }
         });
         $("#spinContainer").smartContentSlider('autoSlide', 1000);
+        var scrollFn = function(e) {
+          var x = e.pageX - $(this).offset().left;
+          if(x > $(this).innerWidth() / 2) {
+            $("#spinContainer").smartContentSlider('next')
+          }
+          else {
+            $("#spinContainer").smartContentSlider('previous')
+          }
+          return false;
+        }
+        var cursorFn = function(e) {
+          var x = e.pageX - $(this).offset().left;
+          if(x > $(this).innerWidth() / 2) {
+            $(this).css({
+              cursor: 'e-resize'
+            })
+          }
+          else {
+            $(this).css({
+              cursor: 'w-resize'
+            })
+          }
+        }
+        $("#mouseControl").click(function(){
+          if($(this).text() == 'Scroll') {
+            $(this).text('Drag')
+            coord.draggingDisabled = 1;
+            $(".croppableImage").smartZoomer('stopDragging')
+            $(".croppableImage").click(scrollFn);
+            $(".croppableImage").mousemove(cursorFn);
+          }
+          else {
+            $(this).text('Scroll')
+            coord.draggingDisabled = null;
+            $(".croppableImage").unbind('click', scrollFn);
+            $(".croppableImage").unbind('mousemove', cursorFn);
+            $(".croppableImage").smartZoomer('startDragging')
+          }
+          return false;
+        });
       });
     </script>
     <style type="text/css">
@@ -65,7 +109,8 @@
   <body>
     <div class="container">
       <div id="spinContainer" class="slideShowContainer">
-        <div class="mainContents" id="#mainContent">
+        <a href="#" id="mouseControl">Scroll</a>
+        <div class="mainContents" id="mainContent">
           <div id="content-1" class="content">
             <div class="croppableImage">
               <img src="./spin/modhu01.jpg" alt="Subrata Sen Gupta" ondragstart="return false" onselectstart="return false" />
