@@ -8,6 +8,7 @@
           var actHeight = $(this).innerHeight();
           var actWidth = $(this).innerWidth();
           var mainDiv = this;
+          $(mainDiv).addClass('smartZoomableContent');
           $("img", mainDiv).addClass('mainZoomableImage');
           var showCropOnly = function(c) {
             if(data.timeout != null) {
