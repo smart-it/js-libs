@@ -230,6 +230,9 @@
             };
             data.showCropOnly(coord);
           });
+          $(thmb).css({
+            opacity: 0.05
+          })
           setTimeout(function(){
             data.thumbWidth = $(thmb).innerWidth();
             data.thumbHeight = data.thumbWidth * data.imageRatio;
@@ -237,6 +240,7 @@
               width: data.thumbWidth
               ,
               height: data.thumbHeight
+              , opacity: 1.0
             });
             $("img", thmb).css({
               width: data.thumbWidth
