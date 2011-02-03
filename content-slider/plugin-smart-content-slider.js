@@ -89,6 +89,7 @@
           var data = $(this).data('smartContentSlider');
           if(!data) {
             $(this).smartContentSlider()
+            data = $(this).data('smartContentSlider');
           }
           data.showContentForId(contentId);
         });
@@ -99,6 +100,7 @@
           var data = $(this).data('smartContentSlider');
           if(!data) {
             $(this).smartContentSlider()
+            data = $(this).data('smartContentSlider');
           }
           var t = data.contentIdIndexes[data.selectedContentId];
           data.showContentForId(data.contentIds[++t < data.contentIds.length ? t : 0]);
@@ -110,6 +112,7 @@
           var data = $(this).data('smartContentSlider');
           if(!data) {
             $(this).smartContentSlider()
+            data = $(this).data('smartContentSlider');
           }
           var t = data.contentIdIndexes[data.selectedContentId];
           data.showContentForId(data.contentIds[--t >= 0 ? t : data.contentIds.length - 1]);
@@ -121,6 +124,7 @@
           var data = $(this).data('smartContentSlider');
           if(!data) {
             $(this).smartContentSlider()
+            data = $(this).data('smartContentSlider');
           }
           var self = this;
           var rotate = self._rotate || ( self._rotate = function( e ) {
