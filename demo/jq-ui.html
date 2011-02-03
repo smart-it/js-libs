@@ -139,7 +139,7 @@
       .slideShowContainer .content div {
         z-index: 10;
       }
-      .slideShowContainer .content img {
+      .slideShowContainer .content .mainImg {
         height: 200px;
         width: 300px;
       }
@@ -164,6 +164,7 @@
         opacity:0.6;
       }
     </style>
+    <link rel="stylesheet" type="text/css" href="../zoomer/smart-zoomer.css">
   </head>
   <body>
     <div class="container">
@@ -210,10 +211,10 @@
     </div>
     <div id="slideShowContainer1" class="slideShowContainer">
       <div class="mainContents" id="#mainContents1">
-        <div id="content-1" class="content"><div class="croppableImage" id="croppableImage-1"><img src="./images/image1.jpg" alt="Amitabh Banchan" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>AB</label></div>
-        <div id="content-2" class="content"><div class="croppableImage" id="croppableImage-2"><img src="./images/image2.jpg" alt="Flame" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Flame</label></div>
-        <div id="content-3" class="content"><div class="croppableImage" id="croppableImage-3"><img src="./images/image3.png" alt="Screenshot" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Screenshot of BCB</label></div>
-        <div id="content-4" class="content"><div class="croppableImage" id="croppableImage-4"><img src="./images/image4.JPG" alt="Mahdi" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Mahdi</label></div>
+        <div id="content-1" class="content"><div class="croppableImage" id="croppableImage-1"><img src="./images/image1.jpg" alt="Amitabh Banchan" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>AB</label></div>
+        <div id="content-2" class="content"><div class="croppableImage" id="croppableImage-2"><img src="./images/image2.jpg" alt="Flame" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Flame</label></div>
+        <div id="content-3" class="content"><div class="croppableImage" id="croppableImage-3"><img src="./images/image3.png" alt="Screenshot" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Screenshot of BCB</label></div>
+        <div id="content-4" class="content"><div class="croppableImage" id="croppableImage-4"><img src="./images/image4.JPG" alt="Mahdi" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Mahdi</label></div>
       </div>
       <div class="thumbnails">
         <div class="thumbnail"><a href="#content-1" class="contentHref"></a><div class="thumbnailContent">AB</div></div>
@@ -227,10 +228,10 @@
     
     <div id="slideShowContainer2" class="slideShowContainer">
       <div class="mainContents" id="#mainContents2">
-        <div id="content-5" class="content"><img src="./images/image1.jpg" alt="Amitabh Banchan" /><br /><div class="captionBg"></div><label>AB</label></div>
-        <div id="content-6" class="content"><img src="./images/image2.jpg" alt="Flame" /><br /><div class="captionBg"></div><label>Flame</label></div>
-        <div id="content-7" class="content"><img src="./images/image3.png" alt="Screenshot" /><br /><div class="captionBg"></div><label>Screenshot of BCB</label></div>
-        <div id="content-8" class="content"><img src="./images/image4.JPG" alt="Mahdi" /><br /><div class="captionBg"></div><label>Mahdi</label></div>
+        <div id="content-5" class="content"><img src="./images/image1.jpg" class="mainImg" alt="Amitabh Banchan" /><br /><div class="captionBg"></div><label>AB</label></div>
+        <div id="content-6" class="content"><img src="./images/image2.jpg" class="mainImg" alt="Flame" /><br /><div class="captionBg"></div><label>Flame</label></div>
+        <div id="content-7" class="content"><img src="./images/image3.png" class="mainImg" alt="Screenshot" /><br /><div class="captionBg"></div><label>Screenshot of BCB</label></div>
+        <div id="content-8" class="content"><img src="./images/image4.JPG" class="mainImg" alt="Mahdi" /><br /><div class="captionBg"></div><label>Mahdi</label></div>
       </div>
       <div class="thumbnails">
         <div class="thumbnail"><a href="#content-5" class="contentHref"></a><div class="thumbnailContent">AB</div></div>

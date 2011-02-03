@@ -1,0 +1,25 @@
+.thumnailImg {
+  border: 2px solid red;
+  width: 100px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 80;
+}
+
+.thumnailImg .visibleArea {
+  background-color: white;
+  opacity: 0.5;
+  z-index: 81;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 100px;
+}
+
+.thumnailImg .mainThumbnailImage {
+  width: 100px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}

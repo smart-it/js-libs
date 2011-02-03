@@ -8,6 +8,7 @@
           var actHeight = $(this).innerHeight();
           var actWidth = $(this).innerWidth();
           var mainDiv = this;
+          $("img", mainDiv).addClass('mainZoomableImage');
           var showCropOnly = function(c) {
             if(data.timeout != null) {
               clearTimeout(data.timeout)
@@ -32,10 +33,25 @@
               data.x = c.x;
               data.y = c.y;
               var top = c.y, left = c.x;
-              $("img", $(mainDiv)).css({
+              var thumbnailCssProps = {
+                width: data.thumbWidth / c.r
+                ,
+                height: data.thumbHeight / c.r
+                ,
+                top: (top/width*data.thumbWidth)+"px"
+                ,
+                left: (left/height*data.thumbHeight)+"px"
+              };
+              if(c.notAnimate) {
+                $(".visibleArea", data.thumbnail).css(thumbnailCssProps);
+              }
+              else {
+                $(".visibleArea", data.thumbnail).animate(thumbnailCssProps);
+              }
+              $(".mainZoomableImage", $(mainDiv)).css({
                 position: "relative"
               });
-              $("img", $(mainDiv)).animate({
+              var zoomCssProps = {
                 top: (-1 * top)+"px"
                 ,
                 left: (-1 * left)+"px"
@@ -43,7 +59,13 @@
                 width: width+"px"
                 ,
                 height: height+"px"
-              });
+              };
+              if(c.notAnimate) {
+                $(".mainZoomableImage", $(mainDiv)).css(zoomCssProps);
+              }
+              else {
+                $(".mainZoomableImage", $(mainDiv)).animate(zoomCssProps);
+              }
               clearTimeout(data.timeout);
             }, 10);
           }
@@ -75,14 +97,14 @@
             y: 0
           });
           data = $(this).data('smartZoomer');
-          $(mainDiv).bind('mousewheel', function(event, delta){
+          $(".mainZoomableImage", mainDiv).bind('mousewheel', function(event, delta){
             delta = delta || (event.wheelDelta ? event.wheelDelta / 120 : (event.detail) ? -event.detail/3 : 0);
             var nextRatio = (data.currentRatio + ((typeof(delta) == 'undefined' || delta == null) ? 1 : delta));
             if(nextRatio <= 0) {
-              nextRatio = 10;
+              nextRatio = 1;
             }
             else if (nextRatio > 10) {
-              nextRatio = 1;
+              nextRatio = 10;
             }
             var coord = {
               x: (data.x / data.currentRatio) * nextRatio,
@@ -93,34 +115,60 @@
             $(zoomer).slider('value', coord.r);
             return true;
           });
-          $(mainDiv).mousedown(function(e) {
+          $(".mainZoomableImage",mainDiv).mousedown(function(e) {
             $(data.mainDiv).css({
               cursor: "move"
             });
-            data.startX = e.pageX - data.mainDiv.offsetLeft;
-            data.startY = e.pageY - data.mainDiv.offsetTop;
-            data.mouseMoveEventHandler = function(e){
+            data.startX = e.pageX - $(data.mainDiv).offset().left;
+            data.startY = e.pageY - $(data.mainDiv).offset().top;
+            data.mouseMoveEventHandler = function(){
+              var e = data.lastMouseMoveEvent
+              data.moveImage(e, "true");
               return true;
             };
+            data.mouseMoveInterval = setInterval(data.mouseMoveEventHandler, 50);
+            $(".mainZoomableImage", $(data.mainDiv)).mousemove(function(e){
+              data.lastMouseMoveEvent = e;
+            });
             return true;
           });
-          $(mainDiv).mouseup(function(e) {
+          data.moveImage = function(e, animate) {
+            if(e == null) {
+              return true;
+            }
+            if(e.pageX == data.pageX && e.pageY == data.pageY) {
+              return true;
+            }
+            data.pageX = e.pageX;
+            data.pageY = e.pageY;
+            var endX = e.pageX - $(data.mainDiv).offset().left;
+            var endY = e.pageY - $(data.mainDiv).offset().top;
+            var deltaX = (data.startX - endX)
+            var deltaY = (endY - data.startY)
+            var newX = data.x + deltaX
+            var newY = data.y - deltaY
+            data.startX = endX
+            data.startY = endY
+            var coord = {
+              x:  newX
+              ,
+              y:  newY
+              ,
+              r: data.currentRatio
+              ,
+              notAnimate: animate
+            };
+            data.showCropOnly(coord);
+          }
+          $(".mainZoomableImage", mainDiv).mouseup(function(e) {
             $(data.mainDiv).css({
               cursor: "default"
             });
             if(data.mouseMoveEventHandler != null) {
-              var endX = e.pageX - data.mainDiv.offsetLeft;
-              var endY = e.pageY - data.mainDiv.offsetTop;
-              var deltaX = (data.startX - endX)
-              var deltaY = (data.startY - endY)
-              var newX = data.x + deltaX
-              var newY = data.y + deltaY
-              var coord = {
-                x:  newX,
-                y:  newY,
-                r: data.currentRatio
-              };
-              data.showCropOnly(coord);
+              if(data.mouseMoveInterval != null) {
+                clearInterval(data.mouseMoveInterval);
+              }
+              data.moveImage(e);
             }
             return true;
           });
@@ -154,11 +202,73 @@
             }
           });
           $(zoomer).hide();
-          $(this).hover(function(){
-            $(zoomer).show('blind');
-          }, function(){
-            $(zoomer).hide('blind');
-          })
+          var thmb = $('<div class="thumnailImg"><img class="mainThumbnailImage" src="'+ $("img", mainDiv).attr('src') + '" alt="Thumbnail" ondragstart="return false" onselectstart="return false" /><div class="visibleArea"></div></div>');
+          $(thmb).appendTo($(this));
+          data.imageRatio = data.actHeight/data.actWidth;
+          data.thumbnail = $(thmb);
+          data.oldCursor = 'default';
+          $(thmb).hover(function(){
+            data.oldCursor = $(this).css('cursor')
+            $(this).css({
+              cursor: 'crosshair'
+            })
+          }, function() {
+            $(this).css({
+              cursor: data.oldCursor
+            })
+          });
+          $(thmb).mousedown(function(e){
+            var endX = e.pageX - $(this).offset().left;
+            var endY = e.pageY - $(this).offset().top;
+            var newX = endX / data.thumbWidth * data.imgWidth - data.actWidth / 2;
+            var newY = endY / data.thumbHeight * data.imgHeight - data.actHeight / 2;
+            var coord = {
+              x:  newX,
+              y:  newY,
+              r: data.currentRatio
+            };
+            data.showCropOnly(coord);
+          });
+          setTimeout(function(){
+            data.thumbWidth = $(thmb).innerWidth();
+            data.thumbHeight = data.thumbWidth * data.imageRatio;
+            $(thmb).css({
+              width: data.thumbWidth
+              ,
+              height: data.thumbHeight
+            });
+            $("img", thmb).css({
+              width: data.thumbWidth
+              ,
+              height: data.thumbHeight
+            });
+            $(".visibleArea", thmb).css({
+              width: data.thumbWidth
+              ,
+              height: data.thumbHeight
+            });
+            $(thmb).hide();
+            $(mainDiv).hover(function(){
+              if(data.mouseMoveEventHandler != null) {
+                if(data.mouseMoveInterval != null) {
+                  clearInterval(data.mouseMoveInterval);
+                }
+              }
+              $(zoomer).show('blind');
+              $(thmb).show('blind', 'slow');
+            }, function(){
+              if(data.mouseMoveEventHandler != null) {
+                if(data.mouseMoveInterval != null) {
+                  clearInterval(data.mouseMoveInterval);
+                }
+              }
+              $(zoomer).hide('blind');
+              $(thmb).hide('blind');
+              $(data.mainDiv).css({
+                cursor: 'default'
+              })
+            })
+          }, 100);
         }
       });
     }
