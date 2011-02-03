@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>jq-ui</title>
+    <title>Spin</title>
     <link rel="stylesheet" type="text/css" href="./css/jquery-ui-base-1.8.css">
     <link rel="stylesheet" type="text/css" href="../zoomer/smart-zoomer.css">
     <script type="text/javascript" src="./js/jquery.min.js"></script>
@@ -10,11 +10,11 @@
     <script type="text/javascript" src="../content-slider/plugin-smart-content-slider.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
+        var coord = {x: 0, y: 0, currentRatio: 0}
         $("#spinContainer").bind('contentShowed', function(event, contentId, thumbnail, oldContentId, oldThumbnail){
           if(contentId == oldContentId) {
             return true;
           }
-          $(".croppableImage", contentId).smartZoomer({});
           return true;
         });
         $("#spinContainer").hover(function(){
@@ -24,6 +24,13 @@
         });
         $("#spinContainer").smartContentSlider({
           showfx: function(content) {
+            $(".croppableImage", content).bind('zoomChanged', function(event, mainDiv, x, y, currentRatio){
+              coord.x = x;
+              coord.y = y;
+              coord.currentRatio = currentRatio;
+              return true;
+            });
+            $(".croppableImage", content).smartZoomer({x: coord.x, y: coord.y, currentRatio: coord.currentRatio});
             $(content).show();
           }
         });
