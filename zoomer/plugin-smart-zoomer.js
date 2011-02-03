@@ -183,10 +183,6 @@
           position: "absolute"
           ,
           "z-index": 1000
-          ,
-          right: "10px"
-          ,
-          top: "10px"
         });
         $(zoomer).slider({
           min: 1
@@ -295,7 +291,54 @@
         });
       });
     }
+    ,
+    zoomIn: function() {
+      return this.each(function() {
+        var data = $(this).data('smartZoomer');
+        if(!data) {
+          $(this).smartZoomer()
+        }
+        var nextRatio = data.currentRatio + 1;
+        if(nextRatio <= 0) {
+          nextRatio = 1;
+        }
+        else if (nextRatio > 10) {
+          nextRatio = 10;
+        }
+        data.showCropOnly({
+          x: data.x
+          ,
+          y: data.y
+          ,
+          r: nextRatio
+        });
+      });
+    }
+    ,
+    zoomOut: function() {
+      return this.each(function() {
+        var data = $(this).data('smartZoomer');
+        if(!data) {
+          $(this).smartZoomer()
+        }
+        var nextRatio = data.currentRatio - 1;
+        if(nextRatio <= 0) {
+          nextRatio = 1;
+        }
+        else if (nextRatio > 10) {
+          nextRatio = 10;
+        }
+        data.showCropOnly({
+          x: data.x
+          ,
+          y: data.y
+          ,
+          r: nextRatio
+        });
+      });
+    }
   };
+
   $.fn.smartZoomer = function(zMethod) {
     // Method calling logic
     if ( zoomerMethods[zMethod] ) {

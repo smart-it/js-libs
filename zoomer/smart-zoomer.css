@@ -6,7 +6,10 @@
   left: 0px;
   z-index: 80;
 }
-
+.smartZoomableContent .zoomer {
+  right: 10px;
+  top: 10px;
+}
 .smartZoomableContent .thumnailImg .visibleArea {
   background-color: white;
   opacity: 0.5;
