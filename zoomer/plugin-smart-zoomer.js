@@ -6,9 +6,10 @@
         var configOptions = options;
         var actHeight = $(this).innerHeight();
         var actWidth = $(this).innerWidth();
-        var x = (!options.x) ? 0 : options.x
-        var y = (!options.y) ? 0 : options.y
-        var currentRatio = (!options.currentRatio) ? 1 : options.currentRatio
+        var x = (!options || !options.x) ? 0 : options.x
+        var y = (!options || !options.y) ? 0 : options.y
+        var currentRatio = (!options || !options.currentRatio) ? 1 : options.currentRatio
+        var draggingEnabled = (!options || !options.draggingDisabled) ? 1 : 0
         var mainDiv = this;
         $(mainDiv).addClass('smartZoomableContent');
         $("img", mainDiv).addClass('mainZoomableImage');
@@ -89,6 +90,8 @@
           ,
           imgWidth: actWidth
           ,
+          draggingEnabled: draggingEnabled
+          ,
           imgHeight: actHeight
           ,
           startX: 0
@@ -100,7 +103,7 @@
           y: y
         });
         data = $(this).data('smartZoomer');
-        $(".mainZoomableImage", mainDiv).bind('mousewheel', function(event, delta){
+        data.mouseWheelFn = function(event, delta){
           delta = delta || (event.wheelDelta ? event.wheelDelta / 120 : (event.detail) ? -event.detail/3 : 0);
           var nextRatio = (data.currentRatio + ((typeof(delta) == 'undefined' || delta == null) ? 1 : delta));
           if(nextRatio <= 0) {
@@ -117,8 +120,9 @@
           data.showCropOnly(coord);
           $(data.zoomer).slider('value', coord.r);
           return true;
-        });
-        $(".mainZoomableImage",mainDiv).mousedown(function(e) {
+        };
+        
+        data.mouseDownFn = function(e) {
           $(data.mainDiv).css({
             cursor: "move"
           });
@@ -134,7 +138,7 @@
             data.lastMouseMoveEvent = e;
           });
           return true;
-        });
+        }
         data.moveImage = function(e, animate) {
           if(e == null) {
             return true;
@@ -163,7 +167,7 @@
           };
           data.showCropOnly(coord);
         }
-        $(".mainZoomableImage", mainDiv).mouseup(function(e) {
+        data.mouseUpFn = function(e) {
           $(data.mainDiv).css({
             cursor: "default"
           });
@@ -174,7 +178,12 @@
             data.moveImage(e);
           }
           return true;
-        });
+        };
+        if(data.draggingEnabled) {
+          data.mouseUpEvent = $(".mainZoomableImage", mainDiv).mouseup(data.mouseUpFn);
+          data.mouseWheelEvent = $(".mainZoomableImage", mainDiv).bind('mousewheel', data.mouseWheelFn);
+          data.mouseDownEvent = $(".mainZoomableImage", mainDiv).mousedown(data.mouseDownFn);
+        }
         //Add zoom sliders
         var zoomer = $('<div class=zoomer></div>');
         data.zoomer = zoomer;
@@ -292,11 +301,50 @@
       });
     }
     ,
+    startDragging: function() {
+      return this.each(function() {
+        var data = $(this).data('smartZoomer');
+        if(!data) {
+          $(this).smartZoomer()
+          data = $(this).data('smartZoomer');
+        }
+        $(this).smartZoomer('stopDragging')
+        data.draggingEnabled = 1;
+        data.mouseUpEvent = $(".mainZoomableImage", data.mainDiv).mouseup(data.mouseUpFn);
+        data.mouseWheelEvent = $(".mainZoomableImage", data.mainDiv).bind('mousewheel', data.mouseWheelFn);
+        data.mouseDownEvent = $(".mainZoomableImage", data.mainDiv).mousedown(data.mouseDownFn);
+      });
+    }
+    ,
+    stopDragging: function() {
+      return this.each(function() {
+        var data = $(this).data('smartZoomer');
+        if(!data) {
+          $(this).smartZoomer()
+          data = $(this).data('smartZoomer');
+        }
+        data.draggingEnabled = 0;
+        if(data.mouseUpEvent) {
+          $(".mainZoomableImage", data.mainDiv).unbind('mouseup', data.mouseUpFn);
+          data.mouseUpEvent = null;
+        }
+        if(data.mouseWheelEvent) {
+          $(".mainZoomableImage", data.mainDiv).unbind('mousewheel', data.mouseWheelFn);
+          data.mouseWheelEvent = null;
+        }
+        if(data.mouseDownEvent) {
+          $(".mainZoomableImage", data.mainDiv).unbind('mousedown', data.mouseDownFn);
+          data.mouseDownEvent = null;
+        }
+      });
+    }
+    ,
     zoomIn: function() {
       return this.each(function() {
         var data = $(this).data('smartZoomer');
         if(!data) {
           $(this).smartZoomer()
+          data = $(this).data('smartZoomer');
         }
         var nextRatio = data.currentRatio + 1;
         if(nextRatio <= 0) {
@@ -320,6 +368,7 @@
         var data = $(this).data('smartZoomer');
         if(!data) {
           $(this).smartZoomer()
+          data = $(this).data('smartZoomer');
         }
         var nextRatio = data.currentRatio - 1;
         if(nextRatio <= 0) {
