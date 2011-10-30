@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head>
+    <title>Content Slideshow</title>
+    <link rel="stylesheet" type="text/css" href="./css/jquery-ui-base-1.8.css">
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-ui.min-1.8.js"></script>
+    <script type="text/javascript" src="../zoomer/plugin-smart-zoomer.js"></script>
+    <script type="text/javascript" src="../content-slider/plugin-smart-content-slider.js"></script>
+    <script type="text/javascript">
+      // This is content scroller
+      $(document).ready(function(){
+        $("#slideShowContainer").smartContentSlider({
+          scrollable: 'true'
+        });
+        $("#slideShowContainer").smartContentSlider('autoSlide', 2250, false);
+        $("#next").click(function(){
+          $("#slideShowContainer").smartContentSlider('next');
+          return false;
+        });
+        $("#previous").click(function(){
+          $("#slideShowContainer").smartContentSlider('previous');
+          return false;
+        });
+      });
+      // This is content slideshow
+      $(document).ready(function(){
+        $("#slideShowContainer1").smartContentSlider({
+          showfx: function(content) {
+            $(content).fadeIn(2000);
+          }
+        });
+        $("#slideShowContainer1").smartContentSlider('autoSlide', 2250, false);
+      });
+    </script>
+    <style type="text/css">
+      .slideShowContainer {
+        width: 300px;
+        overflow: hidden;
+      }
+      .slidableMainContents {
+        width: 1200px;
+      }
+      .slideShowContainer .content {
+        width: 300px;
+        float: left;      
+        position: relative;
+      }
+      .slideShowContainer .content div {
+        z-index: 10;
+      }
+      .slideShowContainer .content .mainImg {
+        height: 200px;
+        width: 300px;
+      }
+      .slideShowContainer .content label {
+        z-index: 100;
+        font-family: serif;
+        font-weight: 900;
+        text-align: left;
+        position: absolute;
+        top: 180px;
+        left: 5px;
+        color: white;
+      }
+      .slideShowContainer .content .captionBg {
+        position: absolute;
+        top: 160px;
+        height: 40px;
+        width: 300px;
+        background-color: gray;
+        /* for IE */
+        filter:alpha(opacity=60);
+        /* CSS3 standard */
+        opacity:0.6;
+      }
+      .thumbnails {
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="slideShowContainer" class="slideShowContainer">
+      <div class="mainContents slidableMainContents" id="#mainContents1">
+        <div id="content-1" class="content"><div class="croppableImage" id="croppableImage-1"><img src="./images/image1.jpg" alt="Amitabh Banchan" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>AB</label></div>
+        <div id="content-2" class="content"><div class="croppableImage" id="croppableImage-2"><img src="./images/image2.jpg" alt="Flame" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Flame</label></div>
+        <div id="content-3" class="content"><div class="croppableImage" id="croppableImage-3"><img src="./images/image3.png" alt="Screenshot" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Screenshot of BCB</label></div>
+        <div id="content-4" class="content"><div class="croppableImage" id="croppableImage-4"><img src="./images/image4.JPG" alt="Mahdi" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Mahdi</label></div>
+      </div>
+      <div class="thumbnails">
+        <div class="thumbnail"><a href="#content-1" class="contentHref"></a><div class="thumbnailContent">AB</div></div>
+        <div class="thumbnail"><a href="#content-2" class="contentHref"></a><div class="thumbnailContent">Flame</div></div>
+        <div class="thumbnail"><a href="#content-3" class="contentHref"></a><div class="thumbnailContent">BCB</div></div>
+        <div class="thumbnail"><a href="#content-4" class="contentHref"></a><div class="thumbnailContent">Mahdi</div></div>
+      </div>
+    </div>
+    <a href="#" id="previous">Previous</a>
+    <a href="#" id="next">Next</a>
+    
+    <div id="slideShowContainer1" class="slideShowContainer">
+      <div class="mainContents vanishableMainContents" id="mainContents2">
+        <div id="content-5" class="content"><div class="croppableImage" id="croppableImage-5"><img src="./images/image1.jpg" alt="Amitabh Banchan" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>AB</label></div>
+        <div id="content-6" class="content"><div class="croppableImage" id="croppableImage-6"><img src="./images/image2.jpg" alt="Flame" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Flame</label></div>
+        <div id="content-7" class="content"><div class="croppableImage" id="croppableImage-7"><img src="./images/image3.png" alt="Screenshot" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Screenshot of BCB</label></div>
+        <div id="content-8" class="content"><div class="croppableImage" id="croppableImage-8"><img src="./images/image4.JPG" alt="Mahdi" class="mainImg" ondragstart="return false" onselectstart="return false"  /></div><br /><div class="captionBg"></div><label>Mahdi</label></div>
+      </div>
+      <div class="thumbnails">
+        <div class="thumbnail"><a href="#content-5" class="contentHref"></a><div class="thumbnailContent">AB</div></div>
+        <div class="thumbnail"><a href="#content-6" class="contentHref"></a><div class="thumbnailContent">Flame</div></div>
+        <div class="thumbnail"><a href="#content-7" class="contentHref"></a><div class="thumbnailContent">BCB</div></div>
+        <div class="thumbnail"><a href="#content-8" class="contentHref"></a><div class="thumbnailContent">Mahdi</div></div>
+      </div>
+    </div>
+  </body>
+</html>
